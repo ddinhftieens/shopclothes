@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" th:href="@{/css/media.css}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <style>
+        img{
+            width: 220px;
+            height: 220px;
+        }
+        @media (max-width: 576px) {
+            img{
+                width: 100px;
+                height: 100px;
+            }
+            .table td{
+                padding: 5px;
+                font-size: small;
+            }
+        }
+        input[type=text],textarea,input[type=number],input[type=file],select{
+            font-family: "Times New Roman";
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            resize: vertical;
+            font-size: x-large;
+        }
+        button{
+            font-family: "Times New Roman";
+            padding: 6px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            resize: vertical;
+            font-size: x-large;
+        }
+        label {
+            font-size: x-large;
+            padding: 12px 12px 12px 0;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="admin/admin-home :: header"></div>
+<div class="container mt-3">
+    <h2 style="text-align: center">Cập nhật size</h2>
+    <br>
+    <form th:object="${size}" th:action="@{/admin/category/catalog/product/color/size/update}" method="post">
+        <div style="text-align: center">
+            <img th:src="@{'/image/product/color?IDcode='+${size.getColorDTO().fileImage}}">
+        </div>
+        <br>
+        <table class="table table-borderless">
+            <tr>
+                <td>ID</td>
+                <td><input type="number" th:field="*{ID}" disabled></td>
+            </tr>
+            <tr>
+                <td>Size</td>
+                <td><input type="text" th:field="*{sizeName}" placeholder="Size" required></td>
+            </tr>
+            <tr>
+                <td>Ngày tạo</td>
+                <td th:text="${size.joindate.time}">...</td>
+            </tr>
+            <tr>
+                <td>Số lượng</td>
+                <td><input type="number"th:field="*{quantity}" placeholder="Số lượng" required></td>
+            </tr>
+            <tr>
+                <td>Giá gốc</td>
+                <td><input type="number"th:field="*{cost}" placeholder="Giá gốc" required></td>
+            </tr>
+            <tr>
+                <td>Sale</td>
+                <td><input type="number"th:field="*{sale}" placeholder="Sale" required></td>
+            </tr>
+            <tr>
+                <td onclick="f()">Delete</td>
+                <td style="display: none" id="delete"><a th:href="@{'/admin/category/catalog/product/color/size/delete?IDsize='+${size.ID}}">Xác nhận</a></td>
+            </tr>
+            <tr>
+                <td align="right"><button class="col-12 btn-danger" onclick="cancel()">Cancel</button></td>
+                <td align="right"><button type="submit" class="col-12 btn-secondary">Update</button></td>
+            </tr>
+        </table>
+    </form>
+    <br>
+</div>
+<script>
+    function f() {
+        document.getElementById("delete").style = 'block';
+    }
+    function cancel() {
+        history.back();
+    }
+</script>
+</body>
+</html>

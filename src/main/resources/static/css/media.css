@@ -1,0 +1,32 @@
+/*ADMIN*/
+@media (max-width: 576px){
+    #tablecategory{
+        font-size: smaller;
+    }
+    #tablecatalog{
+        font-size: xx-small;
+    }
+    #inputcatalog,#tablecolor,#tablesize,#tableproduct,label,#tableimage{
+        font-size: small;
+    }
+    input[type=text],textarea,input[type=number],input[type=file],select{
+        font-size: large;
+        width: 100%;
+    }
+    #myTable > tr{
+        font-size: small;
+    }
+}
+@media (max-width: 767px) {
+    #mediaa{
+        display: none;
+    }
+    #media-dropdownn{
+        display: block;
+    }
+}
+@media (min-width: 768px) {
+    #media-dropdownn{
+        display: none;
+    }
+}

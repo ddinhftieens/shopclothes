@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" th:href="@{/css/media.css}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <style>
+        img{
+            width: 220px;
+            height: 220px;
+        }
+        @media (max-width: 576px) {
+            #salee,#salee-1,#datee,#datee-1{
+                display: none;
+            }
+            img{
+                width: 100px;
+                height: 100px;
+            }
+            #context-color{
+                font-size: x-small;
+            }
+            .table td{
+                padding: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div th:replace="admin/admin-home :: header"></div>
+<div class="container mt-3">
+    <h2 style="text-align: center">Thông tin màu của sản phẩm</h2>
+    <br>
+    <div th:object="${color}">
+        <table class="form-group container-fluid ">
+            <td>
+                <img th:src="@{'/image/product/color?IDcode='+${color.fileImage}}">
+            </td>
+            <td>
+                <table class="table table-borderless" id="context-color" style="margin-bottom: 0px">
+                    <tr>
+                        <td colspan="2" th:text="${color.fileImage}">...</td>
+                    </tr>
+                    <tr>
+                        <td>Tên màu</td>
+                        <td th:text="${color.colorName}">...</td>
+                    </tr>
+                    <tr>
+                        <td>Chất liệu</td>
+                        <td th:text="${color.material}">...</td>
+                    </tr>
+                    <tr>
+                        <td onclick="f()">Xóa màu</td>
+                        <td style="display: none" id="delete"><a th:href="@{'/admin/category/catalog/product/color/delete?IDcolor='+ ${color.ID}}">Xác nhận</a></td>
+                    </tr>
+                </table>
+            </td>
+        </table>
+        <script>
+            function f() {
+                document.getElementById("delete").style = 'block';
+            }
+        </script>
+    </div>
+    <div class="row">
+        <label class="col-3">Ngày</label>
+        <label th:text="${color.joinDate.time}" class="col-8">...</label>
+    </div>
+    <form>
+        <div class="row form-group container-fluid">
+            <input class="form-control col-6" id="myInput" name="catalog-myInput" type="text" placeholder="Search">
+            <div class="col-1"></div>
+            <button type="button" class="btn btn-primary col-4" id="myBtn">Add</button>
+        </div>
+    </form>
+    <br>
+    <p>Danh sách size của màu</p>
+    <table class="table table-bordered">
+        <thead>
+            <tr id="tablesize">
+                <th>Size</th>
+                <th>Số lượng</th>
+                <th>Giá</th>
+                <th id="salee">Giảm</th>
+                <th id="datee">Ngày tạo</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody id="myTable">
+            <tr th:each="i:${sizeList}">
+                <td th:text="${i.sizeName}">...</td>
+                <td th:text="${i.quantity}">...</td>
+                <td th:text="${i.cost}">...</td>
+                <td th:text="${i.sale}" id="salee-1">...</td>
+                <td th:text="${i.joindate.time}" id="datee-1"></td>
+                <td><a th:href="@{'/admin/category/catalog/product/color/size/update?IDsize='+${i.id}}">Edit</a></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title" style="text-align: center">Color</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form class=" row form-group container-fluid" th:action="@{/admin/category/catalog/product/color/size/add}" method="post" th:object="${size}">
+                        <input type="text" placeholder="Độ tuổi" th:field="*{sizeName}" class="col-12" required>
+                        <label class="col-12"></label>
+                        <input type="number" placeholder="Số lượng" th:field="*{quantity}" class="col-12" required>
+                        <label class="col-12"></label>
+                        <input type="number" placeholder="Giá gốc"  th:field="*{cost}" class="col-12" required>
+                        <label class="col-12"></label>
+                        <input type="number" placeholder="Sale" th:field="*{sale}" class="col-12" required><br>
+                        <label class="col-12"></label>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/filter_table.js}"></script>
+<script>
+    $(document).ready(function(){
+        $("#myBtn").click(function(){
+            $("#myModal").modal();
+        });
+    });
+</script>
+</body>
+</html>

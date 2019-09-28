@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" th:href="@{/css/media.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://icono-49d6.kxcdn.com/icono.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <style>
+        img{
+            width: 530px;
+            height: 210px;
+        }
+        @media (max-width: 767px) {
+            img{
+                width: 120px;
+                height: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div th:replace="admin/admin-home :: header"></div>
+<div class="container mt-3">
+    <h2 style="text-align: center">Ảnh bìa</h2>
+    <br>
+    <div class="row form-group container-fluid">
+        <input class="form-control col-6" id="myInput" name="catalog-myInput" type="text" placeholder="Tìm kiếm">
+        <div class="col-1"></div>
+        <button type="button" class="btn btn-primary col-4" id="myBtn">Thêm</button>
+    </div>
+    <br>
+    <p>Danh sách ảnh bìa</p>
+    <p>Hình ảnh đẹp với kích thước w=1140px h=410px</p>
+    <table class="table table-bordered">
+        <thead>
+        <tr id="tableimage">
+            <th>Img</th>
+            <th>Ngày</th>
+            <th>Del</th>
+        </tr>
+        </thead>
+        <tbody id="myTable">
+        <tr th:each="i:${imageHomeEntityList}">
+            <td><img th:src="@{'/image/home-page?IDcode='+${i.image}}"></td>
+            <td th:text="${i.datecreated.time}">...</td>
+            <td><a th:href="@{'/admin/delete/image/home-page?IDimage='+${i.id}}"><i class="icono-cross"></i></a></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title" style="text-align: center">Ảnh bìa</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form class=" row form-group container-fluid" th:action="@{/admin/image/home-page}" method="post" enctype="multipart/form-data" th:object="${imageHomeDTO}">
+                        <label class="col-12"></label>
+                        <input type="file" th:field="*{multipartFile}" required><br>
+                        <label class="col-12"></label>
+                        <button type="submit" class="btn btn-primary">Lưu</button>
+                    </form>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/filter_table.js}"></script>
+<script>
+    $(document).ready(function(){
+        $("#myBtn").click(function(){
+            $("#myModal").modal();
+        });
+    });
+</script>
+</body>
+</html>

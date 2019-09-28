@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://icono-49d6.kxcdn.com/icono.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <style>
+        a{
+            color: black;
+        }
+        @media (max-width: 992px) {
+            #menu-header-home{
+                display: none;
+            }
+            #media-dropdownn-home{
+                display: block;
+            }
+        }
+        @media (min-width: 993px) {
+            #media-dropdownn-home{
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid mt-3" style="background-color: slategrey">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{#1}"><b style="color: white">Đăng nhập</b></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{#2}"><b style="color: white">Đăng kí</b></a>
+            </li>
+        </ul>
+    </div>
+    <div class="container mt-3" style="text-align: center"><img th:src="@{/image/logo}" style="width: 220px;height: 110px"/></div>
+    <div class="container mt-3">
+        <div id="demo" class="carousel slide" data-ride="carousel">
+
+            <!-- Indicators -->
+            <ul class="carousel-indicators">
+                <th:block th:each="image,i:${imageHomeList}">
+                    <li data-target="#demo" th:data-slide-to="${i.index}" th:class="${i.index} eq 0?'active':''"></li>
+                </th:block>
+            </ul>
+
+            <!-- The slideshow -->
+            <div class="carousel-inner">
+                <th:block th:each="i,k:${imageHomeList}">
+                    <div th:class="${k.index} eq 0?'carousel-item active':'carousel-item'">
+                        <img th:src="@{'/image/home-page?IDcode='+${i.image}}" style="width: 100%;height: 100%">
+                    </div>
+                </th:block>
+            </div>
+
+            <!-- Left and right controls -->
+            <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a class="carousel-control-next" href="#demo" data-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </a>
+        </div>
+    </div>
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+                <div class="dropdown" id="media-dropdownn-home">
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="dropdown-menu" style="background-color: #cccccc">
+                        <a class="dropdown-item" th:href="@{#1}">Trang chủ</a>
+                        <a class="dropdown-item" th:href="@{#2}">Giới thiệu</a>
+                        <div th:each="i:${category}">
+                            <a class="dropdown-item" th:href="@{'#?IDcategory='+${i.ID}}" th:text="${i.namecategory}">...</a>
+                        </div>
+                        <a class="dropdown-item" th:href="@{#4}">Tin tức</a>
+                    </div>
+                </div>
+                <ul class="nav" id="menu-header-home">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{#1}"><b>Trang chủ</b></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{#2}"><b>Giới thiệu</b></a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <a class="btn dropdown-toggle" data-toggle="dropdown">
+                                <b>Sản phẩm</b>
+                            </a>
+                            <div class="dropdown-menu">
+                                <div th:each="i:${category}">
+                                    <a class="dropdown-item" th:href="@{'#?IDcategory='+${i.ID}}" th:text="${i.namecategory}">...</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{#2}"><b>Tin tức</b></a>
+                    </li>
+                    <li class="nav-item">
+                        <form>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Tìm kiếm">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                </div>
+                            </div>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                <a class="nav-link" th:href="@{#2}"><i class="fas fa-cart-plus" style="font-size: larger;float: right"></i></a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

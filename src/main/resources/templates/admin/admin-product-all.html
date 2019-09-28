@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Store</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" th:href="@{/css/media.css}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <style>
+        img{
+            width: 140px;
+            height: 140px;
+        }
+        @media (max-width: 576px) {
+            #datee,#datee-1{
+                display: none;
+            }
+            img{
+                width: 80px;
+                height: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div th:replace="admin/admin-home :: header"></div>
+<div class="container mt-3">
+    <h2 style="text-align: center">Danh sách sản phẩm</h2>
+    <br>
+    <div class="row form-group container-fluid">
+        <input class="form-control col-6" id="myInput" name="catalog-myInput" type="text" placeholder="Tìm kiếm">
+        <div class="col-1"></div>
+        <button type="button" class="btn btn-primary col-4" id="myBtn">Thêm</button>
+    </div>
+    <br>
+    <p>Danh sách sản phẩm</p>
+    <table class="table table-bordered">
+        <thead>
+        <tr id="tableproduct">
+            <th>Img</th>
+            <th>IDcode</th>
+            <th>Tên</th>
+            <th id="datee">Ngày</th>
+        </tr>
+        </thead>
+        <tbody id="myTable">
+        <tr th:each="i:${productList}">
+            <td><img th:src="@{'/image/product?IDcode='+${i.IDcode}}"></td>
+            <td><a th:href="@{'/admin/category/catalog/product/color/all?IDproduct='+${i.id}}" th:text="${i.IDcode}">...</a></td>
+            <td th:text="${i.model}">...</td>
+            <td th:text="${i.joindate.time}" id="datee-1">...</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title" style="text-align: center">Sản phẩm</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form class=" row form-group container-fluid" th:action="@{/admin/category/catalog/product/add}" method="post" enctype="multipart/form-data" th:object="${product}">
+                        <label class="col-12"></label>
+                        <input class="col-12" type="text" th:field="*{model}" placeholder="Tên" required>
+                        <label class="col-12"></label>
+                        <input class="col-12" type="text" th:field="*{trademark}" placeholder="Thương hiệu" required>
+                        <label class="col-12"></label>
+                        <input class="col-12" type="text" th:field="*{madein}" placeholder="Nơi sản xuất" required>
+                        <label class="col-12"></label>
+                        <input type="file" th:field="*{multipartFile}" required><br>
+                        <label class="col-12"></label>
+                        <button type="submit" class="btn btn-primary">Lưu</button>
+                    </form>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/filter_table.js}"></script>
+<script>
+    $(document).ready(function(){
+        $("#myBtn").click(function(){
+            $("#myModal").modal();
+        });
+    });
+</script>
+</body>
+</html>
