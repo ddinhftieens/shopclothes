@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Store</title>
-    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://icono-49d6.kxcdn.com/icono.min.css">
     <link rel="stylesheet" type="text/css" media="screen" th:href="@{/css/media.css}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <style>
@@ -16,7 +18,7 @@
             height: 140px;
         }
         @media (max-width: 576px) {
-            #datee,#datee-1{
+            #datee,#datee-1,#imagee,#imagee-1{
                 display: none;
             }
             img{
@@ -24,12 +26,22 @@
                 height: 80px;
             }
         }
+        input[type="text"],input[type=file],textarea{
+            font-family: "Times New Roman";
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            resize: vertical;
+            font-size: x-large;
+        }
     </style>
 </head>
 <body>
-<div th:replace="admin/admin-home :: header"></div>
+<div th:replace="admin/admin-home::header"></div>
 <div class="container mt-3">
-<!--    <h2 style="text-align: center">Danh sách sản phẩm</h2>-->
+<!--    <h2 style="text-align: center">Danh sách bài đăng</h2>-->
     <br>
     <div class="row form-group container-fluid">
         <input class="form-control col-6" id="myInput" name="catalog-myInput" type="text" placeholder="Tìm kiếm">
@@ -37,23 +49,25 @@
         <button type="button" class="btn btn-primary col-4" id="myBtn">Thêm</button>
     </div>
     <br>
-    <p>Danh sách sản phẩm</p>
+    <p>Danh sách bài đăng</p>
     <table class="table table-bordered">
         <thead>
         <tr id="tableproduct">
-            <th>Img</th>
-            <th>IDcode</th>
-            <th>Tên</th>
+            <th id="imagee">Img</th>
+            <th>Tiêu đề</th>
+            <th>By</th>
             <th id="datee">Ngày</th>
+            <th>Del</th>
         </tr>
         </thead>
         <tbody id="myTable">
-        <tr th:each="i:${productList}">
-            <td><img th:src="@{'/image/product?IDcode='+${i.IDcode}}"></td>
-            <td><a th:href="@{'/admin/category/catalog/product/color/all?IDproduct='+${i.id}}" th:text="${i.IDcode}">...</a></td>
-            <td th:text="${i.model}">...</td>
-            <td th:text="${i.joindate.time}" id="datee-1">...</td>
-        </tr>
+            <tr th:each="i:${listNews}">
+                <td id="imagee-1"><img th:src="@{'/image/news?IDcode='+${i.IDimage}}"></td>
+                <td th:text="${i.titel}"></td>
+                <td th:text="${i.customerEntity.firstname} + ${i.customerEntity.lastname}"></td>
+                <td th:text="${i.datecreated}" id="datee-1"></td>
+                <td><a th:href="@{#1}"><i class="icono-cross"></i></a></td>
+            </tr>
         </tbody>
     </table>
     <div class="modal fade" id="myModal">
@@ -66,13 +80,11 @@
                 </div>
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <form class=" row form-group container-fluid" th:action="@{/admin/category/catalog/product/add}" method="post" enctype="multipart/form-data" th:object="${product}">
+                    <form class=" row form-group container-fluid" th:action="@{/admin/news/all}" method="post" enctype="multipart/form-data" th:object="${news}">
                         <label class="col-12"></label>
-                        <input class="col-12" type="text" th:field="*{model}" placeholder="Tên" required>
+                        <input class="col-12" type="text" th:field="*{titel}" placeholder="Tiêu đề" required>
                         <label class="col-12"></label>
-                        <input class="col-12" type="text" th:field="*{trademark}" placeholder="Thương hiệu" required>
-                        <label class="col-12"></label>
-                        <input class="col-12" type="text" th:field="*{madein}" placeholder="Nơi sản xuất" required>
+                        <textarea class="col-12" type="text" th:field="*{content}" placeholder="Nội dung" required></textarea>
                         <label class="col-12"></label>
                         <input type="file" th:field="*{multipartFile}" required><br>
                         <label class="col-12"></label>

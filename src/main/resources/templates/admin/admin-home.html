@@ -37,24 +37,35 @@
             <i class="fas fa-bars"></i>
         </button>
         <div class="dropdown-menu" style="background-color: #cccccc">
-            <a class="dropdown-item" th:href="@{#1}">Tin tức</a>
+            <a class="dropdown-item" th:href="@{/admin/news/all}">Tin tức</a>
             <a class="dropdown-item" th:href="@{/admin/category/all}">Danh mục</a>
-            <a class="dropdown-item" th:href="@{/admin/image/home-page}">Ảnh bìa</a>
+            <a class="dropdown-item" th:href="@{/admin/home-page/newproduct}">Sản phẩm mới</a>
+            <a class="dropdown-item" th:href="@{/admin/home-page/viewproduct}">Số lượng view</a>
+            <a class="dropdown-item" th:href="@{/admin/image/home-page}">Ảnh sự kiện</a>
             <a class="dropdown-item" th:href="@{#1}">Khách hàng</a>
             <a class="dropdown-item" th:href="@{#1}">Đơn hàng</a>
-            <a class="dropdown-item" th:href="@{#1}">Tài khoản</a>
+            <a class="dropdown-item" th:href="@{#2}">Thống kê</a>
+            <a class="dropdown-item" th:href="@{#1}">Thông tin tài khoản</a>
+            <a class="dropdown-item" th:href="@{/home/customer/logout}">Đăng xuất</a>
         </div>
     </div>
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" id="mediaa">
         <li class="nav-item">
-            <a class="nav-link " th:href="@{#1}">Tin tức</a>
+            <a class="nav-link" th:href="@{/admin/news/all}">Tin tức</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" th:href="@{/admin/category/all}">Danh mục</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/admin/image/home-page}">Ảnh bìa</a>
+            <div class="dropdown">
+                <a class="btn dropdown-toggle" data-toggle="dropdown">Trang chủ</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" th:href="@{/admin/home-page/newproduct}">Sản phẩm mới</a>
+                    <a class="dropdown-item" th:href="@{/admin/home-page/viewproduct}">Số lượng view</a>
+                    <a class="dropdown-item" th:href="@{/admin/image/home-page}">Ảnh sự kiện</a>
+                </div>
+            </div>
         </li>
         <li class="nav-item">
             <a class="nav-link" th:href="@{#1}">Khách hàng</a>
@@ -63,7 +74,14 @@
             <a class="nav-link" th:href="@{#1}">Đơn hàng</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" th:href="@{#1}">Tài khoản</a>
+            <div class="dropdown">
+                <a class="btn dropdown-toggle" data-toggle="dropdown">Tài khoản</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" th:href="@{#1}">Thông tin tài khoản</a>
+                    <a class="dropdown-item" th:href="@{#2}">Thống kê</a>
+                    <a class="dropdown-item" th:href="@{/home/customer/logout}">Đăng xuất</a>
+                </div>
+            </div>
         </li>
     </ul>
 </div>

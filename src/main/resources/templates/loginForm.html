@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://icono-49d6.kxcdn.com/icono.min.css">
+    <style>
+        input[type=text],input[type=password],select{
+            font-family: "Times New Roman";
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            resize: vertical;
+            font-size: x-large;
+        }
+        button{
+            font-family: "Times New Roman";
+            padding: 6px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            resize: vertical;
+            font-size: x-large;
+        }
+        label {
+            font-family: "Times New Roman";
+            font-size: x-large;
+            padding: 12px 12px 12px 0;
+            display: inline-block;
+        }
+        @media (max-width: 576px) {
+            label,input[type=text],input[type=password],button{
+                font-size: large;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-3" style="text-align: center"><img th:src="@{/image/logo}" style="width: 220px;height: 110px"/></div>
+<div class="container mt-3">
+    <form th:action="@{/home/login}" method="post">
+        <table class="table table-borderless">
+            <tr>
+                <td><label>Tên</label></td>
+                <td><input type="text" name="username" placeholder="Tài khoản" required></td>
+            </tr>
+            <tr>
+                <td><label>Mật khẩu</label></td>
+                <td><input type="password" name="password" placeholder="Mật khẩu" required></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="savePass"> Lưu mật khẩu</td>
+                <td><a th:href="@{#1}">Quên mật khẩu</a></td>
+            </tr>
+            <tr>
+                <td align="right"><button class="col-12 btn-danger" onclick="cancel()">Cancel</button></td>
+                <td align="right"><button type="submit" class="col-12 btn-secondary">Đăng nhập</button></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<script>
+    function cancel() {
+        window.location.href='/home?error=true';
+    }
+</script>
+</body>
+</html>

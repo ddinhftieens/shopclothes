@@ -11,22 +11,6 @@ public class CustomerDTO {
     public CustomerDTO() {
     }
 
-    public CustomerDTO(String firseName, String lastName, String username, String password, String gender, String dateofbirth, String address, String job, String phone, String email, String role, String imageUser, String joindate) {
-        this.firseName = firseName;
-        this.lastName = lastName;
-        this.username = username;
-        this.password = password;
-        this.gender = gender;
-        this.dateofbirth = dateofbirth;
-        this.address = address;
-        this.job = job;
-        this.phone = phone;
-        this.email = email;
-        this.role = role;
-        this.imageUser = imageUser;
-        this.joindate = joindate;
-    }
-
     public MultipartFile getMultipartFile() {
         return multipartFile;
     }
@@ -143,4 +127,21 @@ public class CustomerDTO {
         this.joindate = joindate;
     }
 
+    @Override
+    public String toString() {
+        return "CustomerDTO{" +
+                "firseName='" + firseName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", gender='" + gender + '\'' +
+                ", dateofbirth='" + dateofbirth + '\'' +
+                ", address='" + address + '\'' +
+                ", job='" + job + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", role='" + role + '\'' +
+                ", joindate='" + joindate + '\'' +
+                '}';
+    }
 }

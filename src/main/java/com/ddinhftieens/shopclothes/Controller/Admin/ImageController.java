@@ -59,4 +59,16 @@ public class ImageController {
             }
         }
     }
+    @GetMapping("/image/news")
+    public void getNews(@RequestParam("IDcode") String IDcode, HttpServletResponse httpServletResponse){
+        final String UP_LOAD = "D:\\shopclothes\\news";
+        File file = new File(UP_LOAD+File.separator+IDcode+".jpg");
+        if(file.exists()){
+            try {
+                Files.copy(file.toPath(),httpServletResponse.getOutputStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

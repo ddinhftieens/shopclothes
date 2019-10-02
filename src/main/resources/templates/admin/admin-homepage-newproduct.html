@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" th:href="@{/css/media.css}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <style>
+        img{
+            width: 180px;
+            height: 180px;
+        }
+        @media (max-width: 576px) {
+            img{
+                width: 90px;
+                height: 90px;
+            }
+            tr>th,tr>td{
+                font-size: small;
+            }
+        }
+    </style>
+</head>
+<body>
+<div th:replace="admin/admin-home::header"></div>
+<div class="container mt-3">
+    <p>Sản phẩm mới</p>
+    <table class="table table-bordered mt-3 text-center">
+        <tr>
+            <th>STT</th>
+            <th>Img</th>
+            <th>Ngày</th>
+            <th>Del</th>
+        </tr>
+        <tr th:each="i,k:${newProduct}">
+            <td th:text="${k.index}"></td>
+            <td><img th:src="@{'/image/product?IDcode='+${i.productEntity.IDcode}}"></td>
+            <td th:text="${i.productEntity.joindate.time}"></td>
+            <td><a th:href="@{'/admin/home-page/newproduct/edit?IDstatus='+${i.id}+'&status='+${i.status}}"><i class="far fa-paper-plane"></i></a></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

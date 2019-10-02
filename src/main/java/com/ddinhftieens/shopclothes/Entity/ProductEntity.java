@@ -44,6 +44,9 @@ public class ProductEntity {
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "productEntity")
     private List<EvaluateEntity> evaluateEntityList;
 
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "productEntity")
+    private StatusProductEntity statusProductEntity;
+
     public ProductEntity() {
     }
 
@@ -133,5 +136,13 @@ public class ProductEntity {
 
     public void setEvaluateEntityList(List<EvaluateEntity> evaluateEntityList) {
         this.evaluateEntityList = evaluateEntityList;
+    }
+
+    public StatusProductEntity getStatusProductEntity() {
+        return statusProductEntity;
+    }
+
+    public void setStatusProductEntity(StatusProductEntity statusProductEntity) {
+        this.statusProductEntity = statusProductEntity;
     }
 }

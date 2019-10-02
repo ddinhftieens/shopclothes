@@ -46,8 +46,7 @@ public class CustomerEntity {
     private String avatarFileName;
 
     @Column(name = "joindate")
-    @Temporal(TemporalType.DATE)
-    private Calendar joindate;
+    private String joindate;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "customerEntity")
     private List<InvoiceEntity> invoiceEntityList;
@@ -60,6 +59,9 @@ public class CustomerEntity {
 
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "customerEntity")
     private List<EvaluateEntity> evaluateEntityList;
+
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "customerEntity")
+    private List<NewsEntity> newsEntityList;
 
     public CustomerEntity() {
     }
@@ -176,11 +178,11 @@ public class CustomerEntity {
         this.avatarFileName = avatarFileName;
     }
 
-    public Calendar getJoindate() {
+    public String getJoindate() {
         return joindate;
     }
 
-    public void setJoindate(Calendar joindate) {
+    public void setJoindate(String joindate) {
         this.joindate = joindate;
     }
 
@@ -206,5 +208,13 @@ public class CustomerEntity {
 
     public void setCommentAnswerEntityList(List<CommentAnswerEntity> commentAnswerEntityList) {
         this.commentAnswerEntityList = commentAnswerEntityList;
+    }
+
+    public List<NewsEntity> getNewsEntityList() {
+        return newsEntityList;
+    }
+
+    public void setNewsEntityList(List<NewsEntity> newsEntityList) {
+        this.newsEntityList = newsEntityList;
     }
 }

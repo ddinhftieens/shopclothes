@@ -53,7 +53,7 @@
 <body>
 <div th:replace="admin/admin-home :: header"></div>
 <div class="container mt-3">
-    <h2 style="text-align: center">Cập nhật size</h2>
+<!--    <h2 style="text-align: center">Cập nhật size</h2>-->
     <br>
     <form th:object="${size}" th:action="@{/admin/category/catalog/product/color/size/update}" method="post">
         <div style="text-align: center">
@@ -91,7 +91,7 @@
             </tr>
             <tr>
                 <td align="right"><button class="col-12 btn-danger" onclick="cancel()">Cancel</button></td>
-                <td align="right"><button type="submit" class="col-12 btn-secondary">Update</button></td>
+                <td align="right"><button type="submit" class="col-12 btn-secondary">Cập nhập</button></td>
             </tr>
         </table>
     </form>

@@ -18,15 +18,12 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
-public class AdminHomeComtroller {
+public class ImgEventController {
     @Autowired
     private ICommon imageHomeDAOImpl;
     @Autowired
     private com.ddinhftieens.shopclothes.Service.ICommon imageHomeServiceImpl;
-    @GetMapping("/home")
-    public String home(){
-        return "admin/admin-home";
-    }
+
     @GetMapping("/image/home-page")
     public String imagePage(Model model){
         List<ImageHomeEntity> imageHomeEntityList = imageHomeDAOImpl.getAll();
@@ -50,7 +47,7 @@ public class AdminHomeComtroller {
         imageHomeServiceImpl.add(imageHomeDTO);
         return "redirect:/admin/image/home-page";
     }
-    @GetMapping("/delete/image/home-page")
+    @GetMapping("/image/home-page/delete")
     public String delete(@RequestParam("IDimage") int IDimage){
         imageHomeServiceImpl.delete(imageHomeServiceImpl.getbyID(IDimage));
         return "redirect:/admin/image/home-page";

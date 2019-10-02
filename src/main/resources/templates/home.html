@@ -22,22 +22,71 @@
             #media-dropdownn-home{
                 display: block;
             }
+            h2{
+                font-size: large;
+            }
         }
         @media (min-width: 993px) {
             #media-dropdownn-home{
                 display: none;
             }
         }
+        @media (max-width: 576px) {
+            #newproduct > div>a>div>p{
+                font-size: small;
+            }
+            #news >div>a>div>p,#news >div>a>div>div>p{
+                font-size: small;
+            }
+            td>a{
+                font-size: small;
+            }
+        }
+        @media (max-width: 768px) {
+
+        }
+        @media (max-width: 475px) {
+            #email{
+                display: none;
+            }
+        }
+        input[type="text"],input[type="file"],input[type="password"],input[type="date"],select,input[type="email"]{
+            font-family: "Times New Roman";
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            resize: vertical;
+        }
     </style>
 </head>
 <body>
     <div class="container-fluid mt-3" style="background-color: slategrey">
         <ul class="nav">
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{#1}"><b style="color: white">Đăng nhập</b></a>
+            <li class="nav-item" th:if="${#session.getAttribute('user')}">
+                <div class="dropdown">
+                    <a class="btn dropdown-toggle" data-toggle="dropdown" style="color: white">
+                        <i class="fas fa-user-lock" style="color: white"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" th:href="@{#1}">Thông tin tài khoản</a>
+                        <a class="dropdown-item" th:href="@{#2}">Đơn hàng</a>
+                        <a class="dropdown-item" th:href="@{#4}">Lịch sử</a>
+                        <a class="dropdown-item" th:href="@{/home/customer/logout}">Đăng xuất</a>
+                    </div>
+                </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{#2}"><b style="color: white">Đăng kí</b></a>
+            <li class="nav-item" th:unless="${#session.getAttribute('user')}">
+                <a class="nav-link" id="login"><b style="color: white">Đăng nhập</b></a>
+            </li>
+            <li class="nav-item" th:unless="${#session.getAttribute('user')}">
+                <a class="nav-link" id="register"><b style="color: white">Đăng kí</b></a>
+            </li>
+            <li class="nav-item" th:if="${#session.getAttribute('user')}">
+                <a class="nav-link"><b style="color: white"><i class="fas fa-phone"> 0865672503</i></b></a>
+            </li>
+            <li class="nav-item" th:if="${#session.getAttribute('user')}" id="email">
+                <a class="nav-link"><b style="color: white"><i class="fas fa-envelope"> ta7.ddinhftieens@gmail.com</i></b></a>
             </li>
         </ul>
     </div>
@@ -77,7 +126,7 @@
                     <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
                         <i class="fas fa-bars"></i>
                     </button>
-                    <div class="dropdown-menu" style="background-color: #cccccc">
+                    <div class="dropdown-menu">
                         <a class="dropdown-item" th:href="@{#1}">Trang chủ</a>
                         <a class="dropdown-item" th:href="@{#2}">Giới thiệu</a>
                         <div th:each="i:${category}">
@@ -125,5 +174,127 @@
             </div>
         </div>
     </div>
+    <div class="container mt-3 text-center">
+        <h2>Sản phẩm mới</h2>
+        <div class="row" style="text-align: center" id="newproduct">
+            <div class="col-3 col-sm-3 col-lg-3 col-md-3 col-xl-3" th:each="i:${newProduct}">
+                <a th:href="@{'/home/product?IDproduct='+${i.productEntity.id}}" class="mt-2" data-toggle="tooltip" data-placement="top" th:title="${i.productEntity.model}">
+                    <div class="text-center mt-2">
+                        <img th:src="@{'/image/product?IDcode='+${i.productEntity.IDcode}}" class="text-center mt-2 img-fluid" width="180" height="180">
+                        <p class="text-truncate" th:text="${i.productEntity.model}"></p>
+                        <p class="text-truncate" th:text="${i.status}" style="color: green">...</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-3 text-center">
+        <h2>Sản phẩm được quan tâm</h2>
+    </div>
+    <div class="container mt-3 text-center">
+        <h2>Tin tức</h2>
+        <div class="row" style="text-align: center" id="news">
+            <div class="col-4 col-sm-4 col-lg-4 col-md-4 col-xl-4" th:each="i:${listNews}">
+                <a th:href="@{'/home/news?IDnews='+${i.id}}" class="mt-2" data-toggle="tooltip" data-placement="top" th:title="${i.titel}">
+                    <div class="text-center mt-2">
+                        <img th:src="@{'/image/news?IDcode='+${i.IDimage}}" class="text-center mt-2 img-fluid" width="220" height="220">
+                        <p class="text-truncate" th:text="${i.titel}"></p>
+                        <p class="text-truncate" th:text="${i.content}"></p>
+                        <div>
+                            <p th:text="${i.datecreated}" style="color: green">...</p>
+                            <p th:text="${i.customerEntity.firstname}+${i.customerEntity.lastname}" style="color: green">...</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal-login">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title" style="text-align: center">Đăng nhập</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form class=" row form-group container-fluid" th:action="@{/home/login}" method="post">
+                        <label class="col-12"></label>
+                        <input class="col-12" type="text" placeholder="Tài khoản" name="username" required>
+                        <label class="col-12"></label>
+                        <input class="col-12" type="password"  placeholder="Mật khẩu" name="password" required>
+                        <label class="col-12"></label>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="">Duy trì đăng nhập
+                            </label>
+                        </div>
+                        <label class="col-12"></label>
+                        <button type="submit" class="btn btn-primary">Đăng nhập</button>
+                    </form>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal-register">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title" style="text-align: center">Đăng kí</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form class=" row form-group container-fluid" th:action="@{/home/register}" method="post" enctype="multipart/form-data" th:object="${register}">
+                        <label class="col-12"></label>
+                        <input class="col-12" type="text" th:field="*{firseName}" placeholder="Tên" required>
+                        <label class="col-12 col-sm-1 col-lg-1 col-md-1 col-xl-1"></label>
+                        <input class="col-12" type="text" th:field="*{lastName}" placeholder="Họ" required>
+                        <label class="col-12"></label>
+                        <input class="col-12" type="text" th:field="*{username}" placeholder="Tài khoản" required>
+                        <label class="col-12"></label>
+                        <input class="col-12" type="password" th:field="*{password}" placeholder="Mật khẩu" required>
+                        <label class="col-12"></label>
+                        <input class="col-12" type="text" th:field="*{address}" placeholder="Địa chỉ" required>
+                        <label class="col-12"></label>
+                        <input class="col-12" type="text" th:field="*{phone}" placeholder="Số điện thoại" required>
+                        <label class="col-12"></label>
+                        <input class="col-12" type="email" th:field="*{email}" placeholder="Email" required>
+                        <label class="col-12"></label>
+                        <input type="file" th:field="*{multipartFile}" class="col-12"><br>
+                        <label class="col-12"></label>
+                        <button type="submit" class="btn btn-primary">Đăng kí</button>
+                    </form>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            $("#login").click(function(){
+                $("#myModal-login").modal();
+            });
+            $("#register").click(function(){
+                $("#myModal-register").modal();
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+    <div th:replace="footer::footer"></div>
 </body>
 </html>

@@ -28,7 +28,7 @@
 <body>
 <div th:replace="admin/admin-home :: header"></div>
 <div class="container mt-3">
-    <h2 style="text-align: center">Ảnh bìa</h2>
+<!--    <h2 style="text-align: center">Ảnh bìa</h2>-->
     <br>
     <div class="row form-group container-fluid">
         <input class="form-control col-6" id="myInput" name="catalog-myInput" type="text" placeholder="Tìm kiếm">
@@ -50,7 +50,7 @@
         <tr th:each="i:${imageHomeEntityList}">
             <td><img th:src="@{'/image/home-page?IDcode='+${i.image}}"></td>
             <td th:text="${i.datecreated.time}">...</td>
-            <td><a th:href="@{'/admin/delete/image/home-page?IDimage='+${i.id}}"><i class="icono-cross"></i></a></td>
+            <td><a th:href="@{'/admin/image/home-page/delete?IDimage='+${i.id}}"><i class="icono-cross"></i></a></td>
         </tr>
         </tbody>
     </table>

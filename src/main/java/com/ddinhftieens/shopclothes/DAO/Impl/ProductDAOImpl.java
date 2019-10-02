@@ -42,6 +42,14 @@ public class ProductDAOImpl implements ICommon<ProductEntity> {
         return (ProductEntity) query.getSingleResult();
     }
 
+    public ProductEntity getbyIDcode(String IDcode){
+        String hql = "select e from ProductEntity e where e.IDcode = :IDcode";
+        Query query = entityManager.createQuery(hql,ProductEntity.class);
+        query.setParameter("IDcode",IDcode);
+        entityManager.close();
+        return (ProductEntity) query.getSingleResult();
+    }
+
     @Override
     public ProductEntity getbyName(String name) {
         return null;

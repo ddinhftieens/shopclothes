@@ -32,6 +32,9 @@ public class ProductController {
     @Autowired
     private com.ddinhftieens.shopclothes.DAO.ICommon catalogDAOImpl;
 
+    @Autowired
+    private ICommon statusProductServiceImpl;
+
     private int IDcatalog;
 
     @GetMapping("/all")
@@ -58,10 +61,12 @@ public class ProductController {
         productDTO.setJoindate(Calendar.getInstance());
         productDTO.setCatalogDTO((CatalogDTO) catalogService.getbyID(this.IDcatalog));
         iCommonproduct.add(productDTO);
+        statusProductServiceImpl.add(new StatusProductDTO("New",productDTO));
         return "redirect:/admin/category/catalog/product/all?IDcatalog=" + this.IDcatalog +"&message=save-success";
     }
     @GetMapping("/delete")
     public String delete(@RequestParam("IDproduct") int ID){
+//        statusProductServiceImpl.delete(statusProductServiceImpl.);
         iCommonproduct.delete(iCommonproduct.getbyID(ID));
         return "redirect:/admin/category/catalog/product/all?IDcatalog=" + this.IDcatalog +"&message-delete-success";
     }

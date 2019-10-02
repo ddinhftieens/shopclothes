@@ -16,11 +16,11 @@
 <body>
 <div th:replace="admin/admin-home :: header"></div>
 <div class="container mt-3">
-    <h2 style="text-align: center">Thêm danh mục gốc</h2>
+<!--    <h2 style="text-align: center">Thêm danh mục gốc</h2>-->
     <br>
     <form th:action="@{/admin/category/add}" method="post">
         <div class="row form-group container-fluid">
-            <input class="form-control col-6" id="myInput" name="category-myInput" type="text" placeholder="Nhập..." required>
+            <input class="form-control col-6" id="myInput" name="category-myInput" type="text" placeholder="Nhập ..." required>
             <div class="col-1"></div>
             <button type="submit" class="btn btn-primary col-4">Lưu</button>
         </div>
